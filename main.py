@@ -5,24 +5,24 @@ import random
 
 app = Flask(__name__)
 
-
+// Load Homepage
 @app.route('/')   #访问根目录默认页执行home（）
 def home():
     return render_template('home.html', resp=None)
 
-
+# Load Api
 @app.route('/api')
 def api():
     return jsonify({'name': 'etf', 'version': '0.01'})
 
-
+# Load error
 @app.route('/error')
 def error():
     codes = [404, 401, 403, 500]
     random.shuffle(codes)
     abort(codes[0])
 
-
+# Get post inputs
 @app.route('/handle_get', methods=['POST'])
 def handle_get():
     url = request.form['url']
@@ -43,7 +43,7 @@ def handle_get():
 
     return render_template('home.html', resp=resp)
 
-
+# Build Repository
 def build_resp(r):
     resp = {'success': False}
     if r is None:
@@ -59,6 +59,6 @@ def build_resp(r):
 
     return resp
 
-
+# Launch Main
 if __name__ == '__main__':
     app.run()
